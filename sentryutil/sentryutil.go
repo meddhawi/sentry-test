@@ -2,14 +2,19 @@ package sentryutil
 
 import (
 	"log"
+	"os"
 	"time"
 
 	"github.com/getsentry/sentry-go"
+	"github.com/joho/godotenv"
 )
 
 func init() {
+	if err := godotenv.Load(".env "); err != nil {
+		panic(err)
+	}
 	err := sentry.Init(sentry.ClientOptions{
-		Dsn: "https://568664b21fe7412ebac4a5158e8cea47@sentry.teamdev.id/3",
+		Dsn: os.Getenv("SENTRY_DSN"),
 		// Set TracesSampleRate to 1.0 to capture 100%
 		// of transactions for performance monitoring.
 		// We recommend adjusting this value in production,
