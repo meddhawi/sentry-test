@@ -6,13 +6,10 @@ import (
 	"time"
 
 	"github.com/getsentry/sentry-go"
-	"github.com/joho/godotenv"
 )
 
 func init() {
-	if err := godotenv.Load(".env "); err != nil {
-		panic(err)
-	}
+	
 	err := sentry.Init(sentry.ClientOptions{
 		Dsn: os.Getenv("SENTRY_DSN"),
 		// Set TracesSampleRate to 1.0 to capture 100%

@@ -7,9 +7,15 @@ import (
 
 	// "github.com/meddhawi/sentry-test/sentry"
 	"github.com/getsentry/sentry-go"
+	"github.com/joho/godotenv"
 	"github.com/meddhawi/sentry-test/sentryutil"
 )
 
+func init() {
+	if err := godotenv.Load(".env"); err != nil {
+		panic(err)
+	}
+}
 func main() {
 	err := errors.New("It didn't work!")
 	hub := sentry.CurrentHub().Clone()
