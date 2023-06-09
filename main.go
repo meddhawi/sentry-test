@@ -1,20 +1,24 @@
 package main
 
 import (
+	// "encoding/json"
+	"errors"
 	"log"
 
+	// "github.com/meddhawi/sentry-test/sentry"
 	"github.com/getsentry/sentry-go"
+	"github.com/meddhawi/sentry-test/sentryutil"
 )
 
 func main() {
-	err := sentry.Init(sentry.ClientOptions{
-		Dsn: "https://4857810cde214b6bb7c4cf434843fbba@o4505310342152192.ingest.sentry.io/4505310396284928",
-		// Set TracesSampleRate to 1.0 to capture 100%
-		// of transactions for performance monitoring.
-		// We recommend adjusting this value in production,
-		TracesSampleRate: 1.0,
-	})
-	if err != nil {
-		log.Fatalf("sentry.Init: %s", err)
-	}
+	err := errors.New("It didn't work!")
+	hub := sentry.CurrentHub().Clone()
+	eventID := hub.CaptureException(err)
+	log.Println("Event ID:", eventID)
+
+	// You can also capture warnings or other log messages using the same package.
+	// sentryutil.CaptureMessage("This is a warning.")
+
+	// Flush buffered events before the program terminates.
+	defer sentryutil.FlushSentry()
 }
