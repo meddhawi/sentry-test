@@ -6,13 +6,10 @@ import (
 	"time"
 
 	"github.com/getsentry/sentry-go"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"``
 )
 
-func init() {
-	if err := godotenv.Load(".env"); err != nil {
-		panic(err)
-	}
+func Initialize() {
 	err := sentry.Init(sentry.ClientOptions{
 		Dsn: os.Getenv("SENTRY_DSN"),
 		// Set TracesSampleRate to 1.0 to capture 100%
@@ -40,5 +37,9 @@ func CaptureError(err error) *sentry.EventID {
 
 func FlushSentry() {
 	sentry.Flush(2 * time.Second)
+}
+
+func SetPanic() {
+	panic("This is an artifical error. No error here!")
 }
 
